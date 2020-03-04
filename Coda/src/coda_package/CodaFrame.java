@@ -14,19 +14,19 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.swing.JButton;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class CodaFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private JButton save;
-	private JButton open;
+	private JMenuItem open;
 	private JTextArea area;
 	private String text;
 	private Font font;
@@ -35,27 +35,39 @@ public class CodaFrame extends JFrame {
 	private Color btncolor;
 	private Font areafont;
 	private JMenuBar bar;
-	private JMenu menu;
+	private JMenu file;
+	private JMenuItem save;
 	private String fontsize;
+	private JMenuItem n;
 
 	public CodaFrame() {
 		super("C()D/\\");
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 500);
-		save = new JButton("Save");
-		open = new JButton("Open");
+		try {
+			setIconImage(ImageIO.read(getClass().getResourceAsStream("logo.png")));
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		open = new JMenuItem("Open");
+		save = new JMenuItem("Save");
+		n = new JMenuItem("New");
 		area = new JTextArea("Welcome to Coda");
-		/*
-		 * bar = new JMenuBar(); menu = new JMenu("File"); menu.setMnemonic();
-		 */
-		add(save, BorderLayout.NORTH);
-		add(open, BorderLayout.SOUTH);
+		bar = new JMenuBar();
+		file = new JMenu("File");
+		bar.add(file);
+		file.add(n);
+		file.addSeparator();
+		file.add(save);
+		file.add(open);
+		setJMenuBar(bar);
 		add(new JScrollPane(area), BorderLayout.CENTER);
 		front = new Color(236, 236, 236);
 		areaback = new Color(64, 80, 100);
-		font = new Font(java.awt.Font.MONOSPACED, Font.BOLD, 16);
-		fontsize = JOptionPane.showInputDialog(null, "Enter Font Size");
+		font = new Font(java.awt.Font.MONOSPACED, Font.BOLD, 12);
+		fontsize = JOptionPane.showInputDialog(null, "Enter Font Size", 12);
 		int font12 = Integer.parseInt(fontsize);
 		areafont = new Font(java.awt.Font.MONOSPACED, Font.BOLD, font12);
 		btncolor = new Color(128, 111, 153);
@@ -63,10 +75,14 @@ public class CodaFrame extends JFrame {
 		area.setForeground(front);
 		area.setFont(areafont);
 		area.setCaretColor(front);
+		file.setFont(font);
 		save.setFont(font);
 		open.setFont(font);
-		save.setBackground(btncolor);
+		n.setFont(font);
+		n.setBackground(btncolor);
+		bar.setBackground(btncolor);
 		open.setBackground(btncolor);
+		save.setBackground(btncolor);
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				text = area.getText();
@@ -107,6 +123,12 @@ public class CodaFrame extends JFrame {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null, e1);
 				}
+			}
+		});
+		n.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				new CodaFrame();
 			}
 		});
 		area.addKeyListener(new KeyListener() {
