@@ -4,7 +4,7 @@ public class CodaCaller {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new CodaFrame();
+		new CodaFrame("Welcome to CODA");
 	}
 
 }

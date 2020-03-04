@@ -23,10 +23,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 
 public class CodaFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JMenuItem open;
+	private String settext;
 	private JTextArea area;
 	private String text;
 	private Font font;
@@ -38,35 +40,45 @@ public class CodaFrame extends JFrame {
 	private JMenu file;
 	private JMenuItem save;
 	private String fontsize;
-	private JMenuItem n;
+	private JMenuItem njava;
+	private JMenuItem nhtml;
+	private JMenu n;
 
-	public CodaFrame() {
+	public CodaFrame(String stext) {
 		super("C()D/\\");
+		settext = stext;
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 500);
 		try {
-			setIconImage(ImageIO.read(getClass().getResourceAsStream("logo.png")));
+			setIconImage(ImageIO.read(getClass().getResourceAsStream("codalogo2.png")));
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		open = new JMenuItem("Open");
-		save = new JMenuItem("Save");
-		n = new JMenuItem("New");
-		area = new JTextArea("Welcome to Coda");
+		open = new JMenuItem("Open", 'O');
+		save = new JMenuItem("Save", 'S');
+		KeyStroke opens = KeyStroke.getKeyStroke("control O");
+		open.setAccelerator(opens);
+		KeyStroke saves = KeyStroke.getKeyStroke("control S");
+		save.setAccelerator(saves);
+		n = new JMenu("New");
+		area = new JTextArea(settext);
 		bar = new JMenuBar();
 		file = new JMenu("File");
+		file.setMnemonic('F');
+		njava = new JMenuItem("Java", 'J');
+		nhtml = new JMenuItem("HTML", 'H');
 		bar.add(file);
+		n.add(njava);
 		file.add(n);
-		file.addSeparator();
 		file.add(save);
 		file.add(open);
 		setJMenuBar(bar);
 		add(new JScrollPane(area), BorderLayout.CENTER);
 		front = new Color(236, 236, 236);
 		areaback = new Color(64, 80, 100);
-		font = new Font(java.awt.Font.MONOSPACED, Font.BOLD, 12);
+		font = new Font(java.awt.Font.MONOSPACED, Font.BOLD, 14);
 		fontsize = JOptionPane.showInputDialog(null, "Enter Font Size", 12);
 		int font12 = Integer.parseInt(fontsize);
 		areafont = new Font(java.awt.Font.MONOSPACED, Font.BOLD, font12);
@@ -76,13 +88,7 @@ public class CodaFrame extends JFrame {
 		area.setFont(areafont);
 		area.setCaretColor(front);
 		file.setFont(font);
-		save.setFont(font);
-		open.setFont(font);
-		n.setFont(font);
-		n.setBackground(btncolor);
 		bar.setBackground(btncolor);
-		open.setBackground(btncolor);
-		save.setBackground(btncolor);
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				text = area.getText();
@@ -125,10 +131,11 @@ public class CodaFrame extends JFrame {
 				}
 			}
 		});
-		n.addActionListener(new ActionListener() {
+		njava.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				new CodaFrame();
+				new CodaFrame("public class ClassName {" + "\n\tpublic static void main(String[] args) {" + "\n"
+						+ "\n\t}" + "\n}");
 			}
 		});
 		area.addKeyListener(new KeyListener() {
