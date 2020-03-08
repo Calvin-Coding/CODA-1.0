@@ -43,6 +43,7 @@ public class CodaFrame extends JFrame {
 	private JMenuItem njava;
 	private JMenuItem nhtml;
 	private JMenu n;
+	private JMenuItem nother;
 
 	public CodaFrame(String stext) {
 		super("C()D/\\");
@@ -58,19 +59,23 @@ public class CodaFrame extends JFrame {
 		}
 		open = new JMenuItem("Open", 'O');
 		save = new JMenuItem("Save", 'S');
-		KeyStroke opens = KeyStroke.getKeyStroke("control O");
-		open.setAccelerator(opens);
-		KeyStroke saves = KeyStroke.getKeyStroke("control S");
-		save.setAccelerator(saves);
+		open.setAccelerator(KeyStroke.getKeyStroke("control O"));
+		save.setAccelerator(KeyStroke.getKeyStroke("control S"));
 		n = new JMenu("New");
+		n.setMnemonic('N');
 		area = new JTextArea(settext);
 		bar = new JMenuBar();
 		file = new JMenu("File");
 		file.setMnemonic('F');
 		njava = new JMenuItem("Java", 'J');
+		njava.setAccelerator(KeyStroke.getKeyStroke("control shift J"));
 		nhtml = new JMenuItem("HTML", 'H');
+		nhtml.setAccelerator(KeyStroke.getKeyStroke("control shift H"));
+		nother = new JMenuItem("Other", 'O');
+		nother.setAccelerator(KeyStroke.getKeyStroke("control shift O"));
 		bar.add(file);
 		n.add(njava);
+		n.add(nhtml);
 		file.add(n);
 		file.add(save);
 		file.add(open);
@@ -138,29 +143,43 @@ public class CodaFrame extends JFrame {
 						+ "\n\t}" + "\n}");
 			}
 		});
+		nhtml.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				new CodaFrame("<!DOCTYPE html>" + "\n<html>" + "\n\t<head>" + "\n\t\t<title>Title</title>" + "\n\t\t"
+						+ "\n\t</head>" + "\n\t<body>" + "\n\t\t" + "\n\t</body>" + "\n<html>");
+			}
+		});
+		nother.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				new CodaFrame("Welcome To Coda");
+			}
+		});
 		area.addKeyListener(new KeyListener() {
 
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
+				int caret = area.getCaretPosition();
+				System.out.println(caret);
 
-				if (key == '{') {
-					area.append("}\n");
-				} else if (key == '(') {
-					area.append("()");
+				if (key == '}') {
+					area.insert("{", caret);
+				} else if (key == ')') {
+					area.insert("(", caret);
 				} else if (key == '"') {
-					area.append("\"");
+					area.insert("\"", caret);
 				} else if (key == '\'') {
-					area.append("\'");
+					area.insert("\'", caret);
 				}
+
 			}
 
-			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
-			@Override
 			public void keyReleased(KeyEvent e) {
 
 			}
