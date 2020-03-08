@@ -161,7 +161,6 @@ public class CodaFrame extends JFrame {
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
 				int caret = area.getCaretPosition();
-				System.out.println(caret);
 
 				if (key == '}') {
 					area.insert("{", caret);
