@@ -49,13 +49,13 @@ public class CodaFrame extends JFrame {
 		super("C()D/\\");
 		settext = stext;
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(600, 500);
 		try {
 			setIconImage(ImageIO.read(getClass().getResourceAsStream("codalogo2.png")));
 		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+
+			JOptionPane.showMessageDialog(null, e2);
 		}
 		open = new JMenuItem("Open", 'O');
 		save = new JMenuItem("Save", 'S');
@@ -109,8 +109,7 @@ public class CodaFrame extends JFrame {
 						writer.write(text);
 						writer.close();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, e1);
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Canceling...", "MESSAGE - C()D/\\", JOptionPane.CANCEL_OPTION);
